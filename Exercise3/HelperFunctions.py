@@ -55,6 +55,7 @@ def rho(D):
 
 
 def run_chain(chain, iterations, var=0.1, eps=0.1):
+    accepted = 0
     for _ in range(iterations):
         theta = chain[-1]
         theta_next = q(theta, var)
@@ -63,9 +64,12 @@ def run_chain(chain, iterations, var=0.1, eps=0.1):
         alpha = pi(theta_next) / pi(theta)
         if (rho(D) < eps) and (np.random.uniform(0, 1) < alpha):
             chain.append(theta_next)
+            accepted += 1
         else:
             chain.append(theta)
+
     # This modifies the chain in-place, thus no need to return it.
+    return accepted
 
 
 def calculate_ESS(chain, M=100):

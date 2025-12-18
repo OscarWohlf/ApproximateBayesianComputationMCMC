@@ -2,12 +2,12 @@ from HelperFunctions import *
 import matplotlib.pyplot as plt
 
 # ABC MCMC Algorithm with no burn-in time
-N = 10000
+N = 100000
 var = 0.1
 eps = 0.1
 theta_chain = [0]
 
-run_chain(chain=theta_chain, iterations=N, var=var, eps=eps)
+_ = run_chain(chain=theta_chain, iterations=N, var=var, eps=eps)
 
 # Study on the trace plot of the chain with different burn-in times
 fig, axes = plt.subplots(2, 2, figsize=(15, 10))
@@ -25,5 +25,5 @@ for i, b in enumerate(burn_in_values):
     axes_idx.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig("BurnInTimeAnalysis.png")
+# plt.savefig("BurnInTimeAnalysis.png")
 plt.show()
