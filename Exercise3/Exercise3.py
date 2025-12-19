@@ -1,7 +1,7 @@
 from HelperFunctions import *
 import matplotlib.pyplot as plt
 
-def analyse_variances(eps, var_values, burn_in, show_trace_plots=False):
+def analyse_variances(eps, var_values, burn_in, show_trace_plots=False, show_posterior=False):
 
     collection_of_chains = []
     acceptance_rates = []
@@ -15,7 +15,7 @@ def analyse_variances(eps, var_values, burn_in, show_trace_plots=False):
         target_ESS = 500 # Target value for ESS (Effective Sample Size).
         current_ESS = 0
         check_ESS = 2000 # Check the ESS of the current chain every 500 iterations.
-        max_iter = 100000
+        max_iter = 50000
         accepted = 0
 
         # Now, the actual chain running starts.
@@ -38,6 +38,8 @@ def analyse_variances(eps, var_values, burn_in, show_trace_plots=False):
     # Show trace plots
     if show_trace_plots:
         plot_trace_plots(collection_of_chains, var_values, acceptance_rates)
+    if show_posterior:
+        plot_hist_vs_post_distribution(collection_of_chains, var_values, acceptance_rates)
 
     for var, acc_r in zip(var_values,acceptance_rates):
         print(f"Variance: {var} --> Acceptance Rate: {acc_r}")
@@ -48,4 +50,4 @@ eps_values = [0.75, 0.25, 0.1, 0.025]
 var_values = [0.01, 0.02, 0.05, 0.1]
 burn_in_values = [50, 100, 2000, 100000]
 
-analyse_variances(eps_values[2], var_values, burn_in_values[2])
+analyse_variances(eps_values[2], var_values, burn_in_values[2], show_trace_plots=True, show_posterior=True)
