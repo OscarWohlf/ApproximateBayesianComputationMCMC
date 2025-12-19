@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.stats import norm
+import matplotlib.pyplot as plt
 
 
 def q(theta,variance):
@@ -24,7 +25,7 @@ def pi(theta):
 
 def P(theta, M=100):
     """
-    Generate data from the underlying model given a set of parameters.
+    Generate data from the underlying model given a parameter theta.
 
     Input:
         theta (float): Value of parameter theta in the current iteration.
@@ -106,3 +107,50 @@ def calculate_ESS(chain, M=100):
     ESS = N * (c0 / sigma2_MCMC)
 
     return ESS
+
+
+def plot_trace_plots(collection_of_chains, var_values, acceptance_rates):
+    fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+    for i, var in enumerate(var_values):
+        var = var_values[i]
+        chain = collection_of_chains[i]
+        acceptance_rate = acceptance_rates[i]
+
+        axes_idx = axes[i // 2, i % 2]
+        axes_idx.plot(chain, color='steelblue', lw=0.5)
+        axes_idx.set_title(rf"Trace plot with $\nu^2 = {var}$ --> Acceptance Rate = {acceptance_rate}")
+        axes_idx.set_xlabel("Iteration index")
+        axes_idx.set_ylabel(r"$\theta$")
+        axes_idx.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    # plt.savefig("VarianceAnalysis.png")
+    plt.show()
+
+def plot_hist_vs_post_distribution(collection_of_chains, var_values, acceptance_rates):
+    # Parameters from true posterior distribution (equation 3 in the project description PDF)
+    M, sigma1_sq, sigma_sq, a, x_bar = 100, 0.1, 3, 1, 0
+
+    # Calculate Posterior Parameters
+    posterior_var = sigma1_sq / (M + sigma1_sq/sigma_sq)
+    posterior_std = np.sqrt(posterior_var)
+    mu1 = 0 # Since x_bar = 0
+    mu2 = (sigma_sq / (sigma_sq + sigma1_sq / M)) * (x_bar - a)
+    alpha = 1 / (1 + np.exp(a * (x_bar - a / 2) * (M / (M * sigma_sq + sigma1_sq))))
+
+    # PDF range
+    x = np.linspace(-1.5, 0.5, 10000)
+    true_pdf = alpha * norm.pdf(x, mu1, posterior_std) + (1 - alpha) * norm.pdf(x, mu2, posterior_std)
+
+    fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+    for i, var in enumerate(var_values):
+        ax = axes[i//2, i%2]
+        ax.hist(collection_of_chains[i], bins=100, density=True, alpha=0.6, color='steelblue', label='ABC-MCMC')
+        ax.plot(x, true_pdf, 'r-', lw=2, label='True Posterior')
+        ax.set_title(rf"$\nu^2 = {var}$ | Acc: {acceptance_rates[i]:.2f}%")
+        ax.legend()
+        ax.grid(True, alpha=0.3)
+
+    plt.tight_layout()
+    # plt.savefig("VarianceAnalysis.png")
+    plt.show()
