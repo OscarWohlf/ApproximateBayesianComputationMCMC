@@ -27,7 +27,6 @@ def algorithm2(check_ESS, var, q_proposal, pi_density, model, M, calculate_ESS, 
                 return np.asarray(theta), accepted
 
         current_ESS = calculate_ESS(np.array(theta))
-        print(current_ESS)
 
     return np.asarray(theta), accepted
 
