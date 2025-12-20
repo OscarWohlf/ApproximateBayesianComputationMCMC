@@ -11,3 +11,10 @@ def b_goal4(x_n, t_n):
 def sig_goal4(x_n, t_n):
     return 0.2
 
+def main():
+    xs, ts = euler_maruyama(0.01, 12, b_goal4, sig_goal4)
+    print(xs)
+    print(ts)
+
+if __name__ == "__main__":
+    main()
