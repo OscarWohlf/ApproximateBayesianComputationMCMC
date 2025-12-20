@@ -1,5 +1,6 @@
 import numpy as np
 from algorithms.euler_maruyama import euler_maruyama
+
 def exact_sim():
     return None 
 
@@ -25,11 +26,11 @@ def simulate_dataset_em(theta):
     dt = 0.01
     xs, ts = euler_maruyama(dt, 12, b_goal4, sig_goal4, theta)
     idx = (times / dt).astype(int)
-    print(xs[idx])
+    return xs[idx]
 
 def main():
     theta = sample_theta_goal4()
-    simulate_dataset_em(theta)
+    print(simulate_dataset_em(theta))
 
 if __name__ == "__main__":
     main()

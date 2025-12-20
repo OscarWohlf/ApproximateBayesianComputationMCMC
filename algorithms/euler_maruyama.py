@@ -1,5 +1,4 @@
 import numpy as np
-from scipy.stats import norm
 
 def euler_maruyama(d_t, T, b, sig, theta):
     n = int(np.ceil(T/d_t))
