@@ -65,7 +65,7 @@ def main():
     data = [0.0]
 
     eps = [0.75, 0.25, 0.1, 0.025]
-    var = [1, 0.5, 0.3, 0.3]
+    var = [1, 0.3, 0.25, 0.25]
 
     grid = np.linspace(-3, 3, 1000)
     true_pdf = true_posterior_g1(grid)
@@ -89,7 +89,7 @@ def main():
         ax.legend()
 
     plt.tight_layout()
-    plt.savefig(f"TryDiffVars.png")
+    # plt.savefig(f"ResultsAlgo2.png")
     plt.show()
 
 if __name__ == "__main__":
