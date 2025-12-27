@@ -60,12 +60,12 @@ def calculate_ESS(chain, M=100):
 
 def main():
     check_ESS = 2000  # Check the ESS of the current chain every 500 iterations.
-    max_iter = 50000
+    max_iter = 200000
     M = 100
     data = [0.0]
 
     eps = [0.75, 0.25, 0.1, 0.025]
-    var = [0.15, 0.15, 0.15, 0.15]
+    var = [1, 0.5, 0.3, 0.3]
 
     grid = np.linspace(-3, 3, 1000)
     true_pdf = true_posterior_g1(grid)
@@ -73,6 +73,7 @@ def main():
     fig, axes = plt.subplots(2, 2, figsize=(12, 8), sharex=True, sharey=True)
 
     for idx, e in enumerate(eps):
+        print(f"Plot {idx+1}: ε={e}")
         v = var[idx]
         thetas, accepted = algorithm2(
             check_ESS, v, q_proposal, pi_density, model_g1, M, calculate_ESS, abs_diff_discrepancy, data, e, max_iter
@@ -88,8 +89,8 @@ def main():
         ax.legend()
 
     plt.tight_layout()
+    plt.savefig(f"TryDiffVars.png")
     plt.show()
-
 
 if __name__ == "__main__":
     main()
