@@ -1,4 +1,5 @@
 import numpy as np
+from goals.goal4 import *
 
 def discrep_goal5(s_star, s_obs):
     theta_0 = np.array([0.07,1.15,0.05,0.33])
@@ -26,3 +27,10 @@ def algorithm2_goal5(N, var, q_proposal, pi_density, model, S, discrep, obs_data
             theta.append(theta_curr)
 
     return np.asarray(theta), accepted
+
+def main():
+    X, Y = create_dataset(2000, 0.01)
+    betas = get_betas(X,Y)
+
+if __name__ == "__main__":
+    main()

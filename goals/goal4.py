@@ -21,7 +21,7 @@ def sample_theta_goal4():
     log_sig = np.random.normal(-1.1, 0.3)
     return np.array([np.exp(log_Ke),np.exp(log_Ka),np.exp(log_Cl), np.exp(log_sig)])
 
-def simulate_dataset_em(theta, dt):
+def simulate_dataset_em(theta, dt = 0.01):
     times = np.array([0.25,0.5,1,2,3.5,5,7,9,12])
     xs, ts = euler_maruyama(dt, 12, b_goal4, sig_goal4, theta)
     idx = np.round((times / dt).astype(int))
