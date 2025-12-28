@@ -24,6 +24,7 @@ def algorithm2(check_ESS, var, q_proposal, pi_density, model, M, calculate_ESS, 
 
             n_iter += 1
             if n_iter > max_iter:
+                print(f"[Warning]: Iteration limit reached. Using N_eff = {current_ESS}")
                 return np.asarray(theta), accepted
 
         current_ESS = calculate_ESS(np.array(theta))
