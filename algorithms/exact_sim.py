@@ -1,6 +1,6 @@
 import numpy as np
 
-def exact_sim(theta):
+def exact_sim(theta, dt=0.01):
     D = 4.0
     Ke, Ka, Cl, sigma = theta
     alpha = (D*Ka*Ke) / Cl
