@@ -24,12 +24,5 @@ def algorithm1(N, prior, model, M, discrep, data, eps):
             theta.append(theta_star)
     return np.asarray(theta), n_attempts
 
-def main():
-    return None
-
-
-if __name__ == "__main__":
-    main()
-
 
 

@@ -57,7 +57,7 @@ def true_posterior_goal1(theta):
 
     
 
-def main():
+def plots_goal1():
     """
     Code for creating the plots for experiment 1
     """
@@ -93,4 +93,4 @@ def main():
     plt.show()
 
 if __name__ == "__main__":
-    main()
+    plots_goal1()
