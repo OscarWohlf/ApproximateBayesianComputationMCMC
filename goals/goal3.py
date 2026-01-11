@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.stats import norm
 import matplotlib.pyplot as plt
-from goals.goal1 import model_g1, abs_diff_discrepancy, true_posterior_g1
+from goals.goal1 import model_goal1, abs_diff_discrepancy, true_posterior_goal1
 from algorithms.algorithm2 import algorithm2
 
 
@@ -68,7 +68,7 @@ def main():
     var = [1, 0.3, 0.25, 0.25]
 
     grid = np.linspace(-3, 3, 1000)
-    true_pdf = true_posterior_g1(grid)
+    true_pdf = true_posterior_goal1(grid)
 
     fig, axes = plt.subplots(2, 2, figsize=(12, 8), sharex=True, sharey=True)
 
@@ -76,7 +76,7 @@ def main():
         print(f"Plot {idx+1}: ε={e}")
         v = var[idx]
         thetas, accepted = algorithm2(
-            check_ESS, v, q_proposal, pi_density, model_g1, M, calculate_ESS, abs_diff_discrepancy, data, e, max_iter
+            check_ESS, v, q_proposal, pi_density, model_goal1, M, calculate_ESS, abs_diff_discrepancy, data, e, max_iter
         )
         acc_rate = accepted / len(thetas)
 
